@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/nosixtools/solarlunar v0.0.0-20211112060703-1b6dea7b4a19
+	github.com/zserge/lorca v0.1.10
 )
 
 require (
