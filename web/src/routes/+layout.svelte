@@ -1,13 +1,17 @@
-<script>
-  import { page } from '$app/stores';
+<script lang="ts">
+  import {page} from '$app/stores';
 </script>
 
 <nav>
   <a href="/" aria-current={$page.url.pathname === '/'}>首页</a>
-  <a href="/person-jgg" aria-current={$page.url.pathname === '/person-jgg'}>个人九宫格</a>
+  <a href="/tao-jgg" aria-current={$page.url.pathname === '/tao-jgg'}>道医九宫格</a>
+  <a href="/calendar" aria-current={$page.url.pathname === '/calendar'}>运势日历</a>
+  <a href="/test" aria-current={$page.url.pathname === '/test'}>测试信息</a>
 </nav>
 
-<slot></slot>
+<div class="main">
+  <slot></slot>
+</div>
 
 <style>
   :global(*) {
@@ -17,6 +21,8 @@
   }
 
   nav {
+    display: flex;
+    justify-content: flex-start;
     background: var(--stone-1);
   }
 
@@ -24,14 +30,24 @@
     appearance: none;
     text-decoration: none;
     display: inline-block;
-    padding: var(--size-2) var(--size-3);
+    padding: 10px 20px;
+    line-height: 20px;
+    /*font-size: 20px;*/
     background: transparent;
     color: var(--blue-10);
+    box-shadow: var(--shadow-1);
+    transition: all 400ms var(--ease-out-3);
   }
 
   nav > a[aria-current="true"] {
     box-shadow: var(--shadow-4);
     background: var(--blue-4);
     color: white;
+  }
+
+  .main {
+    width: 100vw;
+    height: calc(100vh - 40px);
+    padding: 20px;
   }
 </style>

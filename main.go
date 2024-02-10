@@ -31,7 +31,7 @@ func main() {
 
 	log.Printf("main: file server started. @%s", lnFile.Addr())
 
-	lnBk := cmd.StartServer("8080")
+	lnBk := cmd.StartServer("0")
 	defer func(ln net.Listener) {
 		if err = ln.Close(); err != nil {
 			log.Fatal("Backend Server Shutdown:", err)
@@ -50,7 +50,7 @@ func main() {
 		}
 	}(ui)
 
-	log.Printf("main: all started.")
+	log.Printf("main: lorca ui started.")
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.
