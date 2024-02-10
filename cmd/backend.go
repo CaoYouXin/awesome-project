@@ -45,8 +45,8 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func StartServer() net.Listener {
-	ln, err := net.Listen("tcp", "127.0.0.1:0")
+func StartServer(port string) net.Listener {
+	ln, err := net.Listen("tcp", "127.0.0.1:"+port)
 	if err != nil {
 		log.Fatal(err)
 	}
