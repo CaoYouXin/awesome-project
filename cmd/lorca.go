@@ -6,7 +6,7 @@ import (
 )
 
 func StartLorca(url string, api string) lorca.UI {
-	args := []string{"--remote-allow-origins=*", "--disable-features=automation"}
+	args := []string{"--remote-allow-origins=*", "--disable-infobars", "--disable-features=automation"}
 	//if runtime.GOOS == "linux" {
 	//	args = append(args, "--class=Lorca")
 	//}

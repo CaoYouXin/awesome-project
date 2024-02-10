@@ -3,4 +3,4 @@
 cd ../
 
 go generate
-go build -ldflags "-H windowsgui" -o lorca-example.exe
+go build -ldflags "-H windowsgui" -o "awesome.exe"
