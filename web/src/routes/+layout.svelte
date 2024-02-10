@@ -1,9 +1,15 @@
 <script lang="ts">
   import {page} from '$app/stores';
+  import IndexIcon from '$lib/assets/images/crystal.png';
+  import '$lib';
 </script>
 
+<svelte:head>
+  <title>道医九宫格测算</title>
+</svelte:head>
+
 <nav>
-  <a href="/" aria-current={$page.url.pathname === '/'}>首页</a>
+  <a href="/" aria-current={$page.url.pathname === '/'}><img class="icon" src={IndexIcon} alt="克里斯托水晶" />首页</a>
   <a href="/tao-jgg" aria-current={$page.url.pathname === '/tao-jgg'}>道医九宫格</a>
   <a href="/calendar" aria-current={$page.url.pathname === '/calendar'}>运势日历</a>
   <a href="/test" aria-current={$page.url.pathname === '/test'}>测试信息</a>
@@ -29,7 +35,6 @@
   nav > a {
     appearance: none;
     text-decoration: none;
-    display: inline-block;
     padding: 10px 20px;
     line-height: 20px;
     /*font-size: 20px;*/
@@ -37,12 +42,20 @@
     color: var(--blue-10);
     box-shadow: var(--shadow-1);
     transition: all 400ms var(--ease-out-3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   nav > a[aria-current="true"] {
     box-shadow: var(--shadow-4);
     background: var(--blue-4);
     color: white;
+  }
+
+  nav > a > .icon {
+    width: 20px;
+    height: 20px;
   }
 
   .main {
