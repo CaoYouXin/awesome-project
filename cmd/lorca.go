@@ -3,14 +3,13 @@ package cmd
 import (
 	"github.com/zserge/lorca"
 	"log"
-	"runtime"
 )
 
 func StartLorca(url string, api string) lorca.UI {
 	args := []string{"--remote-allow-origins=*", "--disable-features=automation"}
-	if runtime.GOOS == "linux" {
-		args = append(args, "--class=Lorca")
-	}
+	//if runtime.GOOS == "linux" {
+	//	args = append(args, "--class=Lorca")
+	//}
 	ui, err := lorca.New("", "", 800, 600, args...)
 	if err != nil {
 		log.Fatal(err)
