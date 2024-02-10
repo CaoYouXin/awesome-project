@@ -29,4 +29,5 @@
 
 #### 注意
 
-1.  clone下代码后要把文件夹改为驼峰命名
+1. clone下代码后要把文件夹改为驼峰命名
+2. 生成程序图标：windres -o main.syso main.rc
