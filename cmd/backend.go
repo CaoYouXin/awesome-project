@@ -5,8 +5,10 @@ import (
 	"awesomeProject/internal/jgg"
 	"awesomeProject/internal/ping"
 	"awesomeProject/internal/res"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net"
+	"net/http"
 )
 
 func setupRouter() *gin.Engine {
@@ -43,11 +45,17 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func StartServer() {
-	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	err := r.Run(":8080")
+func StartServer() net.Listener {
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
-		fmt.Println("8080端口占用！")
+		log.Fatal(err)
 	}
+
+	go func() {
+		if err = http.Serve(ln, setupRouter()); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	return ln
 }

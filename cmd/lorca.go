@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-func StartLorca(url string) lorca.UI {
+func StartLorca(url string, api string) lorca.UI {
 	args := []string{"--remote-allow-origins=*", "--disable-features=automation"}
 	if runtime.GOOS == "linux" {
 		args = append(args, "--class=Lorca")
@@ -17,14 +17,26 @@ func StartLorca(url string) lorca.UI {
 	}
 
 	// A simple way to know when UI is ready (uses body.onload event in JS)
-	ui.Bind("start", func() {
+	err = ui.Bind("start", func() {
 		log.Println("UI is ready")
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = ui.Bind("getApiRoot", func() string {
+		return api
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Load HTML.
 	// You may also use `data:text/html,<base64>` approach to load initial HTML,
 	// e.g: ui.Load("data:text/html," + url.PathEscape(html))
-	ui.Load(url)
+	if err = ui.Load(url); err != nil {
+		return nil
+	}
 
 	// You may use console.log to debug your JS code, it will be printed via
 	// log.Println(). Also exceptions are printed in a similar manner.
