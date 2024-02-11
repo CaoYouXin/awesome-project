@@ -54,9 +54,9 @@ func initCounter(elem element) map[rune]float64 {
 }
 
 func validate(p *Birthday) error {
-	if !p.Solar {
-		return errors.New("暂不支持传入阴历生日！")
-	}
+	//if !p.Solar {
+	//	return errors.New("暂不支持传入阴历生日！")
+	//}
 
 	if utf8.RuneCountInString(p.Date) != 8 {
 		return errors.New("生日格式不正确：生日应该是八个数")

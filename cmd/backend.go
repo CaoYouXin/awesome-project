@@ -5,16 +5,29 @@ import (
 	"awesomeProject/internal/jgg"
 	"awesomeProject/internal/ping"
 	"awesomeProject/internal/res"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net"
 	"net/http"
+	"time"
 )
 
 func setupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.Default()
+
+	// Cors
+	config := cors.DefaultConfig()
+	config.AllowCredentials = true
+	config.AllowOrigins = []string{"*"}
+	config.AllowMethods = []string{"*"}
+	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization", "user-agent", "X-Requested-With", "Token"}
+	config.MaxAge = 12 * time.Hour
+	r.Use(cors.New(config))
+
+	// Error Handling
 	r.Use(res.ErrorHandler())
 
 	// Ping test

@@ -10,7 +10,7 @@ func StartLorca(url string, api string) lorca.UI {
 	//if runtime.GOOS == "linux" {
 	//	args = append(args, "--class=Lorca")
 	//}
-	ui, err := lorca.New("", "", 800, 600, args...)
+	ui, err := lorca.New("", "", 1240, 826, args...)
 	if err != nil {
 		log.Fatal(err)
 	}

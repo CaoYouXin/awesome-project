@@ -31,3 +31,4 @@
 
 1. clone下代码后要把文件夹改为驼峰命名
 2. 生成程序图标：windres -o main.syso main.rc
+3. 端口检查 netstat -aon | find "8080", tasklist | find ""

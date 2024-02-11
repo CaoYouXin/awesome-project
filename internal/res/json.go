@@ -7,7 +7,7 @@ import (
 
 type JSON struct {
 	Code int64  `json:"code"`
-	Msg  string `json:"msg"`
+	Msg  string `json:"message"`
 	Data any    `json:"data"`
 }
 
