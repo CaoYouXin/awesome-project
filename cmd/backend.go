@@ -53,15 +53,18 @@ func setupRouter() *gin.Engine {
 	authorized.POST("auth", auth.Controller)
 
 	// 九宫格
-	authorized.POST("/birthday", jgg.SetBirthDay)
+	jggController := jgg.Controller{}
+	authorized.GET("/birthday", jggController.ListGe)
+	authorized.POST("/birthday", jggController.SetBirthDay)
+	authorized.DELETE("/birthday/:id", jggController.DelGe)
 
 	return r
 }
 
-func StartServer(port string) net.Listener {
+func StartServer(port string) (net.Listener, error) {
 	ln, err := net.Listen("tcp", "127.0.0.1:"+port)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	go func() {
@@ -70,5 +73,5 @@ func StartServer(port string) net.Listener {
 		}
 	}()
 
-	return ln
+	return ln, nil
 }

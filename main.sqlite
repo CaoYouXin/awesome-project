@@ -1,0 +1,80 @@
+package main
+
+// "github.com/dixonwille/wmenu/v5"
+import (
+	"awesomeProject/db"
+	"awesomeProject/internal/jgg"
+	"database/sql"
+	"errors"
+	"fmt"
+	"log"
+
+	"github.com/dixonwille/wmenu/v5"
+)
+
+func handleFunc(opts []wmenu.Opt) {
+
+	err := errors.New("none.")
+	log.Println(err)
+
+	switch opts[0].Value {
+
+	case 0:
+		err = jgg.AddGe(&jgg.Ge{
+			SolarDate:     "19911106",
+			LunarDate:     "19911001",
+			LeapMonthFlag: false,
+			Hour:          7,
+			Solar:         "128101",
+			Lunar:         "1224",
+			Element:       jgg.ELEMENT_EARTH,
+		})
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		list, err := jgg.ListGe()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		for _, item := range list {
+			log.Println(item.Id, item.LeapMonthFlag, item.Element)
+		}
+	case 1:
+		fmt.Println("Finding a Person")
+	case 2:
+		fmt.Println("Update a Person's information")
+	case 3:
+		fmt.Println("Deleting a person by ID")
+	case 4:
+		fmt.Println("Quitting application")
+	}
+}
+
+func main() {
+	if err := db.InitInst(); err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer func(Inst *sql.DB) {
+		err := Inst.Close()
+		if err != nil {
+			fmt.Println("DB conn close failed.")
+		}
+	}(db.Inst)
+
+	menu := wmenu.NewMenu("What would you like to do?")
+
+	menu.Action(func(opts []wmenu.Opt) error { handleFunc(opts); return nil })
+
+	menu.Option("Add a new Person", 0, true, nil)
+	menu.Option("Find a Person", 1, false, nil)
+	menu.Option("Update a Person's information", 2, false, nil)
+	menu.Option("Delete a person by ID", 3, false, nil)
+	menuErr := menu.Run()
+
+	if menuErr != nil {
+		log.Fatal(menuErr)
+	}
+}

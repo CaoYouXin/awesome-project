@@ -14,21 +14,27 @@
 </label>
 
 <style>
-  :global(.form-item) + .form-item {
-    margin-left: 0;
-    margin-top: var(--size-3);
-  }
-
-  :global(.form-item.inline) + .form-item.inline {
-    margin-left: var(--size-7);
-    margin-top: 0;
-  }
-
   .form-item {
+    margin-bottom: var(--size-3);
+    margin-right: 0;
     display: block;
+
+    /*font-size: var(--font-size-6);*/
   }
 
   .form-item.inline {
+    margin-bottom: 0;
+    margin-right: var(--size-7);
     display: inline-block;
+  }
+
+  :global(.form-item:last-of-type) {
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+
+  .form-item .label {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-9);
   }
 </style>

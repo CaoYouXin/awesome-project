@@ -1,6 +1,7 @@
 package jgg
 
 import (
+	"awesomeProject/internal/res"
 	"errors"
 	"fmt"
 	"slices"
@@ -20,40 +21,44 @@ var digitNum = map[rune]int{
 	'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
 }
 
-func initCounter(elem element) map[rune]float64 {
-	res := map[rune]float64{
+type Service struct {
+	DAO
+}
+
+func (s Service) InitCounter(elem Element) map[rune]float64 {
+	counter := map[rune]float64{
 		'0': 0, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0,
 	}
 
 	switch elem {
 	case ELEMENT_UNKNOWN:
-		return res
+		return counter
 	case ELEMENT_MEDAL:
-		res['1'] = 0.5
-		res['2'] = 0.5
-		return res
+		counter['1'] = 0.5
+		counter['2'] = 0.5
+		return counter
 	case ELEMENT_WOOD:
-		res['4'] = 0.5
-		res['5'] = 0.5
-		return res
+		counter['4'] = 0.5
+		counter['5'] = 0.5
+		return counter
 	case ELEMENT_WATER:
-		res['6'] = 0.5
-		res['9'] = 0.5
-		return res
+		counter['6'] = 0.5
+		counter['9'] = 0.5
+		return counter
 	case ELEMENT_FIRE:
-		res['3'] = 0.5
-		res['0'] = 0.5
-		return res
+		counter['3'] = 0.5
+		counter['0'] = 0.5
+		return counter
 	case ELEMENT_EARTH:
-		res['7'] = 0.5
-		res['8'] = 0.5
-		return res
+		counter['7'] = 0.5
+		counter['8'] = 0.5
+		return counter
 	}
 
-	return res
+	return counter
 }
 
-func validate(p *Birthday) error {
+func (s Service) Validate(p *Birthday) error {
 	//if !p.Solar {
 	//	return errors.New("暂不支持传入阴历生日！")
 	//}
@@ -71,8 +76,8 @@ func validate(p *Birthday) error {
 	return nil
 }
 
-func calcCounter(v string, counter map[rune]float64) string {
-	var res []rune
+func (s Service) CalcCounter(v string, counter map[rune]float64) string {
+	var result []rune
 
 	for _, ch := range v {
 		counter[ch] += 1
@@ -80,17 +85,17 @@ func calcCounter(v string, counter map[rune]float64) string {
 
 	for ch, count := range counter {
 		if count >= 3 {
-			res = append(res, ch)
+			result = append(result, ch)
 		}
 	}
 
-	slices.Sort(res)
+	slices.Sort(result)
 
-	return string(res)
+	return string(result)
 }
 
-func calcSum(v string, counter map[rune]float64) string {
-	res := ""
+func (s Service) CalcSum(v string, counter map[rune]float64) string {
+	result := ""
 	value := v
 	firstRound := true
 
@@ -121,13 +126,13 @@ func calcSum(v string, counter map[rune]float64) string {
 			}
 
 			value = strconv.Itoa(year) + strconv.Itoa(month) + strconv.Itoa(day)
-			res += value
+			result += value
 			continue
 		}
 
 		firstRound = false
 		value = strconv.Itoa(sum)
-		res += value
+		result += value
 
 		if sum < 10 {
 			counter[[]rune(value)[0]] += 1
@@ -135,13 +140,13 @@ func calcSum(v string, counter map[rune]float64) string {
 		}
 	}
 
-	return res
+	return result
 }
 
-func calc(v string, elem element) string {
-	counter1 := initCounter(ELEMENT_UNKNOWN)
-	counter2 := initCounter(elem)
-	res := calcCounter(v, counter1) + calcSum(v, counter2)
+func (s Service) Calc(v string, elem Element) string {
+	counter1 := s.InitCounter(ELEMENT_UNKNOWN)
+	counter2 := s.InitCounter(elem)
+	result := s.CalcCounter(v, counter1) + s.CalcSum(v, counter2)
 
 	var (
 		lacks     []rune
@@ -158,38 +163,38 @@ func calc(v string, elem element) string {
 
 	if len(lacks) > 0 {
 		if counter1['0'] >= 3 {
-			res += "/{"
+			result += "/{"
 		} else {
-			res += "/"
+			result += "/"
 		}
 
 		slices.Sort(lacks)
-		res += string(lacks)
+		result += string(lacks)
 	}
 
 	if len(halfLacks) > 0 {
 		if len(lacks) == 0 {
 			if counter1['0'] >= 3 {
-				res += "/{<"
+				result += "/{<"
 			} else {
-				res += "/<"
+				result += "/<"
 			}
 		} else {
-			res += "<"
+			result += "<"
 		}
 
 		slices.Sort(halfLacks)
-		res += string(halfLacks) + ">"
+		result += string(halfLacks) + ">"
 	}
 
 	if counter1['0'] >= 3 {
-		res += "}"
+		result += "}"
 	}
 
-	return res
+	return result
 }
 
-func convertDate(b *Birthday) string {
+func (s Service) ConvertDate(b *Birthday) string {
 	var value = b.Date[0:4] + "-" + b.Date[4:6] + "-" + b.Date[6:8]
 	var converted string
 
@@ -207,7 +212,7 @@ func convertDate(b *Birthday) string {
 	return year + month + day
 }
 
-func convertHour(h int) element {
+func (s Service) ConvertHour(h int) Element {
 	if h < 0 || h >= 24 {
 		return ELEMENT_UNKNOWN
 	}
@@ -229,4 +234,43 @@ func convertHour(h int) element {
 	}
 
 	return ELEMENT_EARTH
+}
+
+func (s Service) SetBirthDay(params *Birthday) (*Ge, error) {
+	var (
+		solarGe   string
+		lunarGe   string
+		solarDate string
+		lunarDate string
+	)
+	elem := s.ConvertHour(params.Hour)
+
+	if params.Solar {
+		solarDate = params.Date
+		solarGe = s.Calc(solarDate, elem)
+		lunarDate = s.ConvertDate(params)
+		lunarGe = s.Calc(lunarDate, elem)
+	} else {
+		lunarDate = params.Date
+		lunarGe = s.Calc(params.Date, elem)
+		solarDate = s.ConvertDate(params)
+		solarGe = s.Calc(solarDate, elem)
+	}
+
+	ge := &Ge{
+		SolarDate: solarDate,
+		LunarDate: lunarDate,
+		LeapMonth: params.LeapMonthFlag,
+		Hour:      params.Hour,
+		Solar:     solarGe,
+		Lunar:     lunarGe,
+		Element:   elem,
+	}
+
+	err := s.DAO.AddGe(ge)
+	if err != nil {
+		return nil, res.DaoErr1(err)
+	}
+
+	return ge, nil
 }

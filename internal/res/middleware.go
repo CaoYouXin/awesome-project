@@ -24,7 +24,7 @@ func errorHandler(errM ...*ErrorMap) gin.HandlerFunc {
 }
 
 func ErrorHandler() gin.HandlerFunc {
-	err1 := NewErrMap(BadRequestErr).StatusCode(http.StatusOK).Response(func(c *gin.Context, err error) {
+	err1 := NewErrMap(badRequest).StatusCode(http.StatusOK).Response(func(c *gin.Context, err error) {
 		fmt.Println("Wow 400", err.Error())
 		c.JSON(http.StatusOK, JSON{
 			Code: 400,
@@ -32,7 +32,7 @@ func ErrorHandler() gin.HandlerFunc {
 		})
 	})
 
-	err2 := NewErrMap(InternalErr).StatusCode(http.StatusOK).Response(func(c *gin.Context, err error) {
+	err2 := NewErrMap(internal).StatusCode(http.StatusOK).Response(func(c *gin.Context, err error) {
 		fmt.Println("Wow 500", err.Error())
 		c.JSON(http.StatusOK, JSON{
 			Code: 500,

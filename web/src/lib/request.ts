@@ -3,10 +3,11 @@ import axios, {type AxiosRequestConfig} from 'axios'
 interface Req {
   url: string,
   data: object,
-  method: 'GET' | 'POST'
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
 }
 
-function httpReq<T>(obj: Req, config: AxiosRequestConfig = {}): Promise<T> {
+function httpReq<T>(obj: Req, config: AxiosRequestConfig =
+  {}): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     let options: AxiosRequestConfig = {
       url: '',
@@ -96,6 +97,16 @@ export default {
   POST: async <T>(url: string, data = {}, config: AxiosRequestConfig = {}) => {
     return HTTP<T>({
       url: await window.getApiRoot() + url, data, method: 'POST'
+    }, config);
+  },
+  PUT: async <T>(url: string, data = {}, config: AxiosRequestConfig = {}) => {
+    return HTTP<T>({
+      url: await window.getApiRoot() + url, data, method: 'PUT'
+    }, config);
+  },
+  DELETE: async <T>(url: string, data = {}, config: AxiosRequestConfig = {}) => {
+    return HTTP<T>({
+      url: await window.getApiRoot() + url, data, method: 'DELETE'
     }, config);
   }
 }

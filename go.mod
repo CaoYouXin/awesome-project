@@ -3,8 +3,10 @@ module awesomeProject
 go 1.22.0
 
 require (
+	github.com/dixonwille/wmenu/v5 v5.1.0
 	github.com/gin-contrib/cors v1.5.0
 	github.com/gin-gonic/gin v1.9.1
+	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/nosixtools/solarlunar v0.0.0-20211112060703-1b6dea7b4a19
 	github.com/zserge/lorca v0.1.10
 )
@@ -13,6 +15,8 @@ require (
 	github.com/bytedance/sonic v1.10.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
+	github.com/daviddengcn/go-colortext v0.0.0-20180409174941-186a3d44e920 // indirect
+	github.com/dixonwille/wlog/v3 v3.0.1 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
