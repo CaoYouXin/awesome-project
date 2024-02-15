@@ -19,12 +19,12 @@ type Birthday struct {
 }
 
 type Ge struct {
-	Id        int     `json:"id" db:"id"`
-	SolarDate string  `json:"solarDate" db:"solar_date"`
-	LunarDate string  `json:"lunarDate" db:"lunar_date"`
-	LeapMonth bool    `json:"leapMonthFlag" db:"leap_month"`
-	Hour      int     `json:"hour" db:"hour"`
-	Solar     string  `json:"solarGe" db:"solar_ge"`
-	Lunar     string  `json:"lunarGe" db:"lunar_ge"`
-	Element   Element `json:"Element" db:"Element"`
+	Id        int     `json:"id"`
+	SolarDate string  `json:"solarDate"`
+	LunarDate string  `json:"lunarDate"`
+	LeapMonth bool    `json:"leapMonthFlag"`
+	Hour      int     `json:"hour"`
+	Solar     string  `json:"solarGe"`
+	Lunar     string  `json:"lunarGe"`
+	Element   Element `json:"element"`
 }

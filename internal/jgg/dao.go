@@ -6,11 +6,21 @@ import (
 	"log"
 )
 
+const insertGe = `INSERT INTO 
+    person_jgg (solar_date, lunar_date, leap_month, hour, solar_ge, lunar_ge, Element)
+	VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+const selectGe = `SELECT 
+    id, solar_date, lunar_date, leap_month, hour, solar_ge, lunar_ge, Element 
+	FROM person_jgg`
+
+const deleteGe = `DELETE FROM person_jgg where id = ?`
+
 type DAO struct {
 }
 
 func (dao DAO) AddGe(ge *Ge) error {
-	stmt, err := db.Inst.Prepare("INSERT INTO person_jgg (solar_date, lunar_date, leap_month, hour, solar_ge, lunar_ge, Element) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	stmt, err := db.Inst.Prepare(insertGe)
 	if err != nil {
 		return err
 	}
@@ -30,7 +40,7 @@ func (dao DAO) AddGe(ge *Ge) error {
 }
 
 func (dao DAO) ListGe() ([]Ge, error) {
-	query, err := db.Inst.Query("SELECT id, solar_date, lunar_date, leap_month, hour, solar_ge, lunar_ge, Element FROM person_jgg")
+	query, err := db.Inst.Query(selectGe)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +51,7 @@ func (dao DAO) ListGe() ([]Ge, error) {
 		}
 	}(query)
 
-	var res []Ge
+	result := make([]Ge, 0)
 
 	for query.Next() {
 		ge := Ge{}
@@ -49,14 +59,14 @@ func (dao DAO) ListGe() ([]Ge, error) {
 		if err != nil {
 			return nil, err
 		}
-		res = append(res, ge)
+		result = append(result, ge)
 	}
 
-	return res, nil
+	return result, nil
 }
 
 func (dao DAO) DelGe(id int) (bool, error) {
-	stmt, err := db.Inst.Prepare("DELETE FROM person_jgg where id = ?")
+	stmt, err := db.Inst.Prepare(deleteGe)
 	if err != nil {
 		return false, err
 	}

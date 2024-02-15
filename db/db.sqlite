@@ -1,1 +1,13 @@
-CREATE TABLE person_jgg (id INTEGER not null constraint person_jgg_pk primary key autoincrement, solar_date TEXT not null, lunar_date TEXT not null, leap_month INTEGER, hour INTEGER, solar_ge TEXT not null, lunar_ge TEXT not null, element TEXT)
+create table person_jgg
+(
+    id         INTEGER not null
+        constraint person_jgg_pk
+            primary key autoincrement,
+    solar_date TEXT    not null,
+    lunar_date TEXT    not null,
+    leap_month INTEGER,
+    hour       INTEGER,
+    solar_ge   TEXT    not null,
+    lunar_ge   TEXT    not null,
+    element    TEXT
+);
