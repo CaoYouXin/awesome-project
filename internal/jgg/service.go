@@ -43,15 +43,15 @@ func (s Service) InitCounter(elem Element) map[rune]float64 {
 		return counter
 	case ELEMENT_WATER:
 		counter['6'] = 0.5
-		counter['9'] = 0.5
+		counter['0'] = 0.5
 		return counter
 	case ELEMENT_FIRE:
 		counter['3'] = 0.5
-		counter['0'] = 0.5
 		return counter
 	case ELEMENT_EARTH:
 		counter['7'] = 0.5
 		counter['8'] = 0.5
+		counter['9'] = 0.5
 		return counter
 	}
 
