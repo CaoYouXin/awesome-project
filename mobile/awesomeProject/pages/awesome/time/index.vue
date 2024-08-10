@@ -2,10 +2,10 @@
   <view class="awesome-time-page">
     <view class="form-container">
       <u-form labelPosition="left" :model="form" :rules="rules" ref="uForm">
-        <u-form-item label="姓名" prop="name" borderBottom>
-          <u-input v-model="form.name" placeholder="请输入姓名"></u-input>
+        <u-form-item label="名称" prop="name" borderBottom>
+          <u-input v-model="form.name" placeholder="请输入名称"></u-input>
         </u-form-item>
-        <u-form-item label="生日" prop="birthday" borderBottom>
+        <u-form-item label="时间" prop="birthday" borderBottom>
           <u-datetime-picker
             v-model="form.birthday"
             mode="datetime"
@@ -17,8 +17,8 @@
         <u-button @click="submitForm()" text="提交"></u-button>
       </u-form>
     </view>
-    <uni-table border stripe emptyText="暂无更多数据">
-      <!-- 表头行 -->
+
+    <!-- <uni-table border stripe emptyText="暂无更多数据">
       <uni-tr>
         <uni-th align="center">姓名</uni-th>
         <uni-th align="center">时辰</uni-th>
@@ -28,7 +28,6 @@
         <uni-th align="left">阴格</uni-th>
         <uni-th align="left">操作</uni-th>
       </uni-tr>
-      <!-- 表格数据行 -->
       <uni-tr v-for="(item, index) in tableData" :key="index">
         <uni-td>{{ item.name }}</uni-td>
         <uni-td>{{ item.hour.hour }}（{{ item.hour.element }}）</uni-td>
@@ -38,13 +37,50 @@
         <uni-td>{{ item.geYin }}</uni-td>
         <uni-td>
           <u-button
-            @click="tableData.splice(index, 1)"
+            @click="handleDelete(index)"
             text="删除"
             type="error"
           ></u-button>
         </uni-td>
       </uni-tr>
-    </uni-table>
+    </uni-table> -->
+
+    <u-card v-for="(item, index) in tableData" :key="index" padding="10">
+      <template #head>
+        <view class="line between">
+          <view class="line start flex1">
+            <u-text
+              class="flex0"
+              style="margin-right: 10rpx"
+              type="primary"
+              :text="item.name"
+            ></u-text>
+            <u-text
+              class="flex1"
+              type="success"
+              :text="`${item.hour.hour}(${item.hour.element})`"
+            ></u-text>
+          </view>
+          <u-icon name="trash" @click="handleDelete(index)"></u-icon>
+        </view>
+      </template>
+      <template #body>
+        <uni-table border stripe emptyText="暂无更多数据">
+          <uni-tr>
+            <uni-th align="center" style="width: 50%"
+              >阳历：{{ item.solarDate }}</uni-th
+            >
+            <uni-th align="center" style="width: 50%"
+              >阴历：{{ item.lunarDate }}</uni-th
+            >
+          </uni-tr>
+          <uni-tr>
+            <uni-td align="center">{{ item.geYang }}</uni-td>
+            <uni-td align="center">{{ item.geYin }}</uni-td>
+          </uni-tr>
+        </uni-table>
+      </template>
+    </u-card>
   </view>
 </template>
 
@@ -74,10 +110,17 @@ export default {
     this.tableData = JSON.parse(localStorage.getItem("timeHistory")) || [];
   },
   onHide() {
-    console.log("saving");
-    localStorage.setItem("timeHistory", JSON.stringify(this.tableData));
+    this.save();
   },
   methods: {
+    save() {
+      console.log("saving");
+      localStorage.setItem("timeHistory", JSON.stringify(this.tableData));
+    },
+    handleDelete(index) {
+      this.tableData.splice(index, 1);
+      this.save();
+    },
     resetForm() {
       this.form = {
         name: "",
@@ -92,11 +135,11 @@ export default {
 
           console.log(this.form.birthday);
           const res = calcAwesome(this.form.birthday);
-          this.tableData.push({
+          this.tableData.unshift({
             ...this.form,
             ...res,
           });
-
+          this.save();
           this.resetForm();
         })
         .catch((errors) => {
@@ -109,9 +152,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/static/style.scss";
+
 .awesome-time-page {
   .form-container {
     padding: $to-border;
+    border-bottom: solid 1rpx $color-primary;
 
     button {
       margin: $to-border 0;

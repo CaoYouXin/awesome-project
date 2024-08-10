@@ -56,5 +56,13 @@
         },
         "usingComponents" : true
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    "h5" : {
+        "router" : {
+            "base" : "./"
+        },
+        "devServer" : {
+            "https" : true
+        }
+    }
 }

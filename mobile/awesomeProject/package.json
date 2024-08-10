@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "solarlunar": "^2.0.7",
-    "uview-plus": "^3.3.5"
+    "uview-plus": "^3.3.15"
   }
 }

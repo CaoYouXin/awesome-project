@@ -11,19 +11,21 @@ export function calcAwesome(timestamp) {
     day.get("month") + 1,
     day.get("date")
   );
-  const geYang = calcGe(day.format("YYYYMMDD"));
+  const geYang = calcGe(day.format("YYYYMMDD"), hour);
 
   day = day
     .set("year", dayData.lYear)
     .set("month", dayData.lMonth - 1)
     .set("date", dayData.lDay);
   const lunarDate = day.format("YYYY-MM-DD");
-  const geYin = calcGe(day.format("YYYYMMDD"));
+  const geYin = calcGe(day.format("YYYYMMDD"), hour);
 
   return {
     hour: hour,
     solarDate,
+    geYang,
     lunarDate,
+    geYin,
   };
 }
 
@@ -75,4 +77,88 @@ function calcHour(hour) {
   };
 }
 
-function calcGe(dateStr) {}
+function calcGe(dateStr, hour) {
+  const counter0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const counter1 = JSON.parse(JSON.stringify(counter0));
+
+  for (const i of hour.ge) {
+    counter1[i] += 0.5;
+  }
+
+  const result = calcCounter(dateStr, counter0) + calcSum(dateStr, counter1);
+
+  let lack = "";
+  let half = "";
+  for (const i in counter1) {
+    if (counter1[i] === 0) {
+      lack += i;
+    } else if (counter1[i] === 0.5) {
+      half += i;
+    }
+  }
+
+  return result + "/" + lack + (half ? `<${half}>` : "");
+}
+
+function calcSum(dateStr, counter) {
+  let result = "";
+  let firstRound = true;
+
+  while (true) {
+    let sum = 0;
+
+    for (let i = 0; i < dateStr.length; ++i) {
+      counter[+dateStr[i]] += 1;
+      sum += +dateStr[i];
+    }
+
+    if (firstRound && sum < 11) {
+      let year = 0;
+      let month = 0;
+      let day = 0;
+
+      for (let i = 0; i < 4; ++i) {
+        year += +dateStr[i];
+      }
+
+      for (let i = 4; i < 6; ++i) {
+        month += +dateStr[i];
+      }
+
+      for (let i = 6; i < dateStr.length; ++i) {
+        day += +dateStr[i];
+      }
+
+      dateStr = "" + year + month + day;
+    } else {
+      dateStr = "" + sum;
+    }
+
+    result += dateStr;
+    firstRound = false;
+    if (sum < 10) {
+      counter[sum] += 1;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function calcCounter(dateStr, counter) {
+  let result = "";
+
+  // 计数
+  for (let i = 0; i < dateStr.length; ++i) {
+    counter[+dateStr[i]] += 1;
+  }
+
+  // 计算>3
+  for (const i in counter) {
+    if (counter[i] >= 3) {
+      result += i;
+    }
+  }
+
+  return result;
+}
