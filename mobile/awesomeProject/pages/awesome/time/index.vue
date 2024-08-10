@@ -45,20 +45,27 @@
       </uni-tr>
     </uni-table> -->
 
-    <u-card v-for="(item, index) in tableData" :key="index" padding="10">
+    <u-card
+      v-for="(item, index) in tableData"
+      :key="index"
+      :class="[hideFoot[index] && 'hide-foot']"
+      padding="10"
+      @click="toggleFoot(index)"
+    >
       <template #head>
         <view class="line between">
           <view class="line start flex1">
             <view class="flex0" style="margin-right: 10rpx">
               <u-text type="primary" :text="item.name"></u-text>
             </view>
-            <u-text
-              class="flex1"
-              type="success"
-              :text="`${item.hour.hour}(${item.hour.element})`"
-            ></u-text>
+            <view class="flex1" style="margin-right: 10rpx">
+              <u-text
+                type="success"
+                :text="`${item.hour.hour}(${item.hour.element})`"
+              ></u-text>
+            </view>
           </view>
-          <u-icon name="trash" @click="handleDelete(index)"></u-icon>
+          <u-icon name="trash" @click.stop="handleDelete(index)"></u-icon>
         </view>
       </template>
       <template #body>
@@ -77,12 +84,28 @@
           </uni-tr>
         </uni-table>
       </template>
+      <template #foot>
+        <uni-table border stripe emptyText="暂无更多数据">
+          <uni-tr>
+            <uni-th align="center" style="width: 50%">
+              男：此时主{{ getNow(index).man }}格
+            </uni-th>
+            <uni-th align="center" style="width: 50%">
+              女：此时主{{ getNow(index).woman }}格
+            </uni-th>
+          </uni-tr>
+          <uni-tr v-for="(step, idx) in getNow(index).tableData" :key="idx">
+            <uni-td align="center" v-html="step.man"></uni-td>
+            <uni-td align="center" v-html="step.woman"></uni-td>
+          </uni-tr>
+        </uni-table>
+      </template>
     </u-card>
   </view>
 </template>
 
 <script>
-import { calcAwesome } from "@/utils/awesome";
+import { calcAwesome, calcNow } from "@/utils/awesome";
 
 export default {
   data() {
@@ -100,16 +123,36 @@ export default {
         },
       },
       tableData: [],
+      hideFoot: [],
     };
+  },
+  computed: {
+    nowTableData() {
+      return this.tableData.map((item) =>
+        calcNow(item.geYang, item.geYin, item.solarDate)
+      );
+    },
   },
   onShow() {
     this.resetForm();
     this.tableData = JSON.parse(localStorage.getItem("timeHistory")) || [];
+    this.hideFoot = this.tableData.map(() => true);
   },
   onHide() {
     this.save();
   },
   methods: {
+    getNow(idx) {
+      return this.nowTableData[idx];
+    },
+    toggleFoot(idx) {
+      if (!this.hideFoot[idx]) {
+        this.hideFoot[idx] = true;
+      } else {
+        this.hideFoot = this.hideFoot.map(() => true);
+        this.hideFoot[idx] = false;
+      }
+    },
     save() {
       console.log("saving");
       localStorage.setItem("timeHistory", JSON.stringify(this.tableData));
@@ -158,6 +201,12 @@ export default {
 
     button {
       margin: $to-border 0;
+    }
+  }
+
+  .u-card.hide-foot {
+    ::v-deep .u-card__foot {
+      display: none;
     }
   }
 }

@@ -1,6 +1,78 @@
 import dayjs from "dayjs";
 import solarlunar from "solarlunar";
 
+export function calcNow(geYang, geYin, birthday = "YYYY-MM-DD") {
+  const mainLast = [11.9, 9.8, 11.9, 9.8, 9.8, 11.9, 9.8, 11.9, 9.8, 11.9];
+  const diff = dayjs().diff(dayjs(birthday, "YYYY-MM-DD"), "year");
+  const mainYang = +geYang[geYang.indexOf("/") - 1];
+  const mainYin = +geYin[geYin.indexOf("/") - 1];
+
+  let man;
+  let woman;
+  let tableData = [];
+
+  let step;
+  let count = 0;
+  while (count <= diff) {
+    if (!man || man === "阴") {
+      man = "阳";
+      step = mainLast[mainYang];
+    } else {
+      man = "阴";
+      step = mainLast[mainYin];
+    }
+
+    count += step;
+  }
+
+  count = 0;
+  while (count <= diff) {
+    if (!woman || woman === "阳") {
+      woman = "阴";
+      step = mainLast[mainYin];
+    } else {
+      woman = "阳";
+      step = mainLast[mainYang];
+    }
+
+    count += step;
+  }
+
+  let manEnd;
+  let womanEnd;
+  let manStart = dayjs(birthday, "YYYY-MM-DD");
+  let womanStart = dayjs(birthday, "YYYY-MM-DD");
+  const daysPerYear = (365 * 3 + 366) / 4;
+  for (let i = 0; i < 11; i++) {
+    manEnd = manStart.add(
+      mainLast[i % 2 === 0 ? mainYang : mainYin] * daysPerYear,
+      "day"
+    );
+    womanEnd = womanStart.add(
+      mainLast[i % 2 === 0 ? mainYin : mainYang] * daysPerYear,
+      "day"
+    );
+
+    tableData.push({
+      man: `${i % 2 === 0 ? "阳" : "阴"}:${manStart.format(
+        "YYYY-MM-DD"
+      )}<br />至 ${manEnd.format("YYYY-MM-DD")}`,
+      woman: `${i % 2 === 0 ? "阴" : "阳"}:${womanStart.format(
+        "YYYY-MM-DD"
+      )}<br />至 ${womanEnd.format("YYYY-MM-DD")}`,
+    });
+
+    manStart = manEnd;
+    womanStart = womanEnd;
+  }
+
+  return {
+    man,
+    woman,
+    tableData,
+  };
+}
+
 export function calcAwesome(timestamp) {
   let day = dayjs(timestamp);
   const hour = calcHour(day.get("hour"));
