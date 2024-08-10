@@ -49,12 +49,9 @@
       <template #head>
         <view class="line between">
           <view class="line start flex1">
-            <u-text
-              class="flex0"
-              style="margin-right: 10rpx"
-              type="primary"
-              :text="item.name"
-            ></u-text>
+            <view class="flex0" style="margin-right: 10rpx">
+              <u-text type="primary" :text="item.name"></u-text>
+            </view>
             <u-text
               class="flex1"
               type="success"
@@ -67,12 +64,12 @@
       <template #body>
         <uni-table border stripe emptyText="暂无更多数据">
           <uni-tr>
-            <uni-th align="center" style="width: 50%"
-              >阳历：{{ item.solarDate }}</uni-th
-            >
-            <uni-th align="center" style="width: 50%"
-              >阴历：{{ item.lunarDate }}</uni-th
-            >
+            <uni-th align="center" style="width: 50%">
+              阳历：{{ item.solarDate }}
+            </uni-th>
+            <uni-th align="center" style="width: 50%">
+              阴历：{{ item.lunarDate }}
+            </uni-th>
           </uni-tr>
           <uni-tr>
             <uni-td align="center">{{ item.geYang }}</uni-td>

@@ -23,6 +23,7 @@
   }
 
   .flex0 {
-    flex: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
 }
