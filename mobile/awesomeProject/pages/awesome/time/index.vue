@@ -65,7 +65,9 @@
               ></u-text>
             </view>
           </view>
-          <u-icon name="trash" @click.stop="handleDelete(index)"></u-icon>
+          <view @click.stop="handleDelete(index)">
+            <u-icon name="trash"></u-icon>
+          </view>
         </view>
       </template>
       <template #body>
