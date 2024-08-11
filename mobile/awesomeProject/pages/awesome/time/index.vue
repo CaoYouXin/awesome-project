@@ -10,8 +10,8 @@
             v-model="form.birthday"
             mode="datetime"
             hasInput
-            :minDate="new Date(1930, 0, 1).getTime()"
-            :maxDate="new Date().getTime()"
+            :minDate="new Date(1900, 0, 1).getTime()"
+            :maxDate="new Date(2100, 0, 1).getTime()"
           ></u-datetime-picker>
         </u-form-item>
         <u-button @click="submitForm()" text="提交"></u-button>
@@ -151,9 +151,15 @@ export default {
       if (!this.hideFoot[idx]) {
         this.hideFoot[idx] = true;
       } else {
-        this.hideFoot = this.hideFoot.map(() => true);
-        this.hideFoot[idx] = false;
+        this.resetFoot(idx);
       }
+    },
+    resetFoot(except = -1) {
+      this.hideFoot = this.tableData.map(() => true);
+      if (except < 0 || except >= this.tableData.length) {
+        return;
+      }
+      this.hideFoot[except] = false;
     },
     save() {
       console.log("saving");
@@ -183,6 +189,7 @@ export default {
           });
           this.save();
           this.resetForm();
+          this.resetFoot();
         })
         .catch((errors) => {
           uni.showToast({ title: "校验失败", icon: "error" });
@@ -194,9 +201,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/static/style.scss";
-
 .awesome-time-page {
+  padding-bottom: $to-border;
+
   .form-container {
     padding: $to-border;
     border-bottom: solid 1rpx $color-primary;

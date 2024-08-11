@@ -19,9 +19,13 @@ export default {
 @import "@/static/customicons.css";
 // uview css entry
 @import "uview-plus/index.scss";
+// 工具样式表
+@import "@/static/style.scss";
 // 设置整个项目的背景色
 page {
   background-color: #f5f5f5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 /* #endif */
