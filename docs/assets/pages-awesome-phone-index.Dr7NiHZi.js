@@ -1,0 +1,1 @@
+import{_ as t}from"./u-text.DyVDH61P.js";import{f as r,b as e,o as n}from"./index-DgupuRwW.js";import{_ as o,r as s}from"./u-icon.D9viAlsN.js";const a=o({},[["render",function(o,a,i,m,p,f){const u=s(r("u-text"),t);return n(),e(u,{align:"center",type:"primary",style:{"margin-top":"20rpx"},text:"|金木水火土\\n|合作伙伴|医院法院|配偶同事\\n|自己|老朋友|新朋友"})}]]);export{a as default};

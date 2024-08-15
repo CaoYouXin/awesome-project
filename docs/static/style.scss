@@ -1,0 +1,29 @@
+.line {
+  display: flex;
+  align-items: center;
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.start {
+    justify-content: flex-start;
+  }
+
+  &.end {
+    justify-content: flex-end;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  .flex1 {
+    flex: 1;
+  }
+
+  .flex0 {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+}
