@@ -90,12 +90,12 @@ function calcRenMDH(monthIdx, dateCount, hourCount) {
   let consultList = [{ text, consult: consults[last] }];
 
   last = (dateCount + last - 1) % 6;
-  text += '~' + ren[last];
+  text += '+' + ren[last];
   consultList = [...consultList, { text: ren[last], consult: consults[last] }];
   const dateLast = last;
 
   last = (hourCount + last - 1) % 6;
-  text += '~' + ren[last];
+  text += '+' + ren[last];
 
   if (dateLast !== last) {
     consultList = [...consultList, { text: ren[last], consult: consults[last] }];

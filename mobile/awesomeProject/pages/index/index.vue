@@ -9,7 +9,7 @@
         <text>、</text>
         <uni-link href="https://www.baidu.com/s?wd=小六壬" text="小六壬"></uni-link>
         <text>后，开发的两个小工具，仅供自娱自乐！</text>
-        <uni-link href="https://github.com/CaoYouXin/awesome-project" text="@v1.0"></uni-link>
+        <uni-link href="https://github.com/CaoYouXin/awesome-project" text="@v1.1"></uni-link>
       </view>
     </view>
 

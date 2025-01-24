@@ -94,6 +94,8 @@ export default {
   }
 
   .bottom {
+    box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.1);
+    background-color: white;
     text-align: center;
     padding: $to-border;
     position: fixed;
