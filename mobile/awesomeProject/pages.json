@@ -13,19 +13,25 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "道医九宫格"
+        "navigationBarTitleText": "我的小工具"
       }
     },
     {
       "path": "pages/awesome/time/index",
       "style": {
-        "navigationBarTitleText": "时间密码"
+        "navigationBarTitleText": "道医九宫格"
+      }
+    },
+    {
+      "path": "pages/awesome/ren/index",
+      "style": {
+        "navigationBarTitleText": "小六壬"
       }
     },
     {
       "path": "pages/awesome/phone/index",
       "style": {
-        "navigationBarTitleText": "手机号密码"
+        "navigationBarTitleText": "手机号小密码"
       }
     }
   ],

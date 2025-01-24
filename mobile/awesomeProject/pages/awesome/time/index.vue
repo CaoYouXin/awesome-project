@@ -97,17 +97,23 @@
       <secret1 />
     </awe-popup>
 
+    <awe-popup ref="popupStar" title="标星小密码">
+      <secret2 />
+    </awe-popup>
+
     <up-float-button :isMenu="true" bottom="50rpx" :list="list" @item-click="itemClick"></up-float-button>
   </view>
 </template>
 
 <script>
 import Secret1 from './components/secret1.vue';
+import Secret2 from './components/secret2.vue';
 import { calcAwesome, calcNow } from '@/utils/awesome';
 
 export default {
   components: {
     Secret1,
+    Secret2,
   },
   data() {
     return {

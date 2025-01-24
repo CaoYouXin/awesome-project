@@ -1,0 +1,1 @@
+import{_ as t,f as e,g as n,d as r,G as a,o as s}from"./index-C2LxcLj4.js";const o=t({},[["render",function(t,o,p,i,x,c){const d=e(n("up-text"),a);return s(),r(d,{align:"center",type:"primary",style:{"margin-top":"20rpx"},text:"|金木水火土\\n|合作伙伴|医院法院|配偶同事\\n|自己|老朋友|新朋友"})}]]);export{o as default};
