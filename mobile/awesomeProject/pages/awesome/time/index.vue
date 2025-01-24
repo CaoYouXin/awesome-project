@@ -1,21 +1,21 @@
 <template>
   <view class="awesome-time-page">
     <view class="form-container">
-      <u-form labelPosition="left" :model="form" :rules="rules" ref="uForm">
-        <u-form-item label="名称" prop="name" borderBottom>
-          <u-input v-model="form.name" placeholder="请输入名称"></u-input>
-        </u-form-item>
-        <u-form-item label="时间" prop="birthday" borderBottom>
-          <u-datetime-picker
+      <up-form labelPosition="left" :model="form" :rules="rules" ref="uForm">
+        <up-form-item label="名称" prop="name" borderBottom>
+          <up-input v-model="form.name" placeholder="请输入名称"></up-input>
+        </up-form-item>
+        <up-form-item label="时间" prop="birthday" borderBottom>
+          <up-datetime-picker
             v-model="form.birthday"
             mode="datetime"
             hasInput
             :minDate="new Date(1900, 0, 1).getTime()"
             :maxDate="new Date(2100, 0, 1).getTime()"
-          ></u-datetime-picker>
-        </u-form-item>
-        <u-button @click="submitForm()" text="提交"></u-button>
-      </u-form>
+          ></up-datetime-picker>
+        </up-form-item>
+        <up-button @click="submitForm()" text="提交"></up-button>
+      </up-form>
     </view>
 
     <!-- <uni-table border stripe emptyText="暂无更多数据">
@@ -36,16 +36,16 @@
         <uni-td>{{ item.lunarDate }}</uni-td>
         <uni-td>{{ item.geYin }}</uni-td>
         <uni-td>
-          <u-button
+          <up-button
             @click="handleDelete(index)"
             text="删除"
             type="error"
-          ></u-button>
+          ></up-button>
         </uni-td>
       </uni-tr>
     </uni-table> -->
 
-    <u-card
+    <up-card
       v-for="(item, index) in tableData"
       :key="index"
       :class="[hideFoot[index] && 'hide-foot']"
@@ -56,29 +56,22 @@
         <view class="line between">
           <view class="line start flex1">
             <view class="flex0" style="margin-right: 10rpx">
-              <u-text type="primary" :text="item.name"></u-text>
+              <up-text type="primary" :text="item.name"></up-text>
             </view>
             <view class="flex1" style="margin-right: 10rpx">
-              <u-text
-                type="success"
-                :text="`${item.hour.hour}(${item.hour.element})`"
-              ></u-text>
+              <up-text type="success" :text="`${item.hour.hour}(${item.hour.element})`"></up-text>
             </view>
           </view>
           <view @click.stop="handleDelete(index)">
-            <u-icon name="trash"></u-icon>
+            <up-icon name="trash"></up-icon>
           </view>
         </view>
       </template>
       <template #body>
         <uni-table border stripe emptyText="暂无更多数据">
           <uni-tr>
-            <uni-th align="center" style="width: 50%">
-              阳历：{{ item.solarDate }}
-            </uni-th>
-            <uni-th align="center" style="width: 50%">
-              阴历：{{ item.lunarDate }}
-            </uni-th>
+            <uni-th align="center" style="width: 50%">阳历：{{ item.solarDate }}</uni-th>
+            <uni-th align="center" style="width: 50%">阴历：{{ item.lunarDate }}</uni-th>
           </uni-tr>
           <uni-tr>
             <uni-td align="center">{{ item.geYang }}</uni-td>
@@ -89,12 +82,8 @@
       <template #foot>
         <uni-table border stripe emptyText="暂无更多数据">
           <uni-tr>
-            <uni-th align="center" style="width: 50%">
-              男：此时主{{ getNow(index).man }}格
-            </uni-th>
-            <uni-th align="center" style="width: 50%">
-              女：此时主{{ getNow(index).woman }}格
-            </uni-th>
+            <uni-th align="center" style="width: 50%">男：此时主{{ getNow(index).man }}格</uni-th>
+            <uni-th align="center" style="width: 50%">女：此时主{{ getNow(index).woman }}格</uni-th>
           </uni-tr>
           <uni-tr v-for="(step, idx) in getNow(index).tableData" :key="idx">
             <uni-td align="center" v-html="step.man"></uni-td>
@@ -102,42 +91,54 @@
           </uni-tr>
         </uni-table>
       </template>
-    </u-card>
+    </up-card>
+
+    <awe-popup ref="popupLevel" title="数字的密码">
+      <secret1 />
+    </awe-popup>
+
+    <up-float-button :isMenu="true" bottom="50rpx" :list="list" @item-click="itemClick"></up-float-button>
   </view>
 </template>
 
 <script>
-import { calcAwesome, calcNow } from "@/utils/awesome";
+import Secret1 from './components/secret1.vue';
+import { calcAwesome, calcNow } from '@/utils/awesome';
 
 export default {
+  components: {
+    Secret1,
+  },
   data() {
     return {
       form: {
-        name: "",
-        birthday: "",
+        name: '',
+        birthday: '',
       },
       rules: {
         name: {
-          type: "string",
+          type: 'string',
           required: true,
-          message: "请填写姓名",
-          trigger: ["blur", "change"],
+          message: '请填写姓名',
+          trigger: ['blur', 'change'],
         },
       },
       tableData: [],
       hideFoot: [],
+      list: [
+        { key: 'level', name: 'level', color: '#fff', backgroundColor: 'red' },
+        { key: 'star', name: 'star', color: '#fff', backgroundColor: 'green' },
+      ],
     };
   },
   computed: {
     nowTableData() {
-      return this.tableData.map((item) =>
-        calcNow(item.geYang, item.geYin, item.solarDate)
-      );
+      return this.tableData.map(item => calcNow(item.geYang, item.geYin, item.solarDate));
     },
   },
   onShow() {
     this.resetForm();
-    this.tableData = JSON.parse(localStorage.getItem("timeHistory")) || [];
+    this.tableData = JSON.parse(localStorage.getItem('timeHistory')) || [];
     this.hideFoot = this.tableData.map(() => true);
   },
   onHide() {
@@ -162,8 +163,8 @@ export default {
       this.hideFoot[except] = false;
     },
     save() {
-      console.log("saving");
-      localStorage.setItem("timeHistory", JSON.stringify(this.tableData));
+      console.log('saving');
+      localStorage.setItem('timeHistory', JSON.stringify(this.tableData));
     },
     handleDelete(index) {
       this.tableData.splice(index, 1);
@@ -171,15 +172,18 @@ export default {
     },
     resetForm() {
       this.form = {
-        name: "",
+        name: '',
         birthday: new Date().getTime(),
       };
+      this.$nextTick(() => {
+        this.$refs.uForm.clearValidate();
+      });
     },
     submitForm() {
       this.$refs.uForm
         .validate()
-        .then((_) => {
-          uni.showToast({ title: "校验通过" });
+        .then(_ => {
+          uni.showToast({ title: '校验通过' });
 
           console.log(this.form.birthday);
           const res = calcAwesome(this.form.birthday);
@@ -191,10 +195,19 @@ export default {
           this.resetForm();
           this.resetFoot();
         })
-        .catch((errors) => {
-          uni.showToast({ title: "校验失败", icon: "error" });
+        .catch(errors => {
+          uni.showToast({ title: '校验失败', icon: 'error' });
           console.error(errors);
         });
+    },
+    itemClick(e) {
+      const key = e.key;
+      const capitalize = key.charAt(0).toUpperCase() + key.slice(1);
+      const ref = this.$refs['popup' + capitalize];
+      if (ref && ref.open) {
+        ref.open();
+      }
+      console.log('itemClick', 'popup' + capitalize);
     },
   },
 };
@@ -202,7 +215,7 @@ export default {
 
 <style lang="scss" scoped>
 .awesome-time-page {
-  padding-bottom: $to-border;
+  padding-bottom: 200rpx;
 
   .form-container {
     padding: $to-border;

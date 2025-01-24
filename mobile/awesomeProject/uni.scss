@@ -1,7 +1,7 @@
-@import "@/uni_modules/uni-scss/variables.scss";
-
 // uview-ui 主题
-@import "uview-plus/theme.scss";
+@import 'uview-plus/theme.scss';
+// uni_modules 变量
+@import '@/uni_modules/uni-scss/variables.scss';
 
 // 颜色变量
 $color-primary: rgb(245, 95, 95);
@@ -15,3 +15,4 @@ $line-height-huge: 88rpx;
 
 // 尺寸变量
 $to-border: 28rpx;
+$near-border: 14rpx;

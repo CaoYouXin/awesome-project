@@ -1,0 +1,21 @@
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "proseWrap": "preserve",
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "disableLanguages": ["vue"],
+  "endOfLine": "auto",
+  "htmlWhitespaceSensitivity": "ignore",
+  "ignorePath": ".prettierignore",
+  "trailingComma": "es5",
+  "jsxSingleQuote": false,
+  "jsxBracketSameLine": false,
+  "requireConfig": false,
+  "eslintIntegration": false,
+  "stylelintIntegration": false,
+  "tslintIntegration": false
+}
