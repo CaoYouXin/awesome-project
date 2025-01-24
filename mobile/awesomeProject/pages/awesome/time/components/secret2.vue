@@ -90,13 +90,13 @@ export default {
         }
 
         .secret1-desc {
-          text-align: left;
+          text-align: justify;
 
           .secret1-desc-item {
             flex-direction: row;
 
             .secret1-desc-value {
-              text-align: left;
+              text-align: justify;
             }
           }
         }
@@ -112,13 +112,13 @@ export default {
         }
 
         .secret1-desc {
-          text-align: right;
+          text-align: justify;
 
           .secret1-desc-item {
             flex-direction: row-reverse;
 
             .secret1-desc-value {
-              text-align: right;
+              text-align: justify;
             }
           }
         }

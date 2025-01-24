@@ -129,7 +129,7 @@ export default {
         }
 
         .details-desc {
-          text-align: left;
+          text-align: justify;
         }
       }
 
@@ -143,7 +143,7 @@ export default {
         }
 
         .details-desc {
-          text-align: right;
+          text-align: justify;
         }
       }
 

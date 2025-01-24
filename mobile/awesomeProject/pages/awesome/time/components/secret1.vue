@@ -216,7 +216,7 @@ export default {
           flex-direction: row;
 
           .secret1-desc-value {
-            text-align: left;
+            text-align: justify;
           }
         }
       }
@@ -234,7 +234,7 @@ export default {
           flex-direction: row-reverse;
 
           .secret1-desc-value {
-            text-align: right;
+            text-align: justify;
           }
         }
       }
