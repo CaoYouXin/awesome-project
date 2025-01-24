@@ -89,11 +89,15 @@ export default {
           box-shadow: inset 0 0 20rpx #f39999;
         }
 
-        .secret1-desc-item {
-          flex-direction: row;
+        .secret1-desc {
+          text-align: left;
 
-          .secret1-desc-value {
-            text-align: left;
+          .secret1-desc-item {
+            flex-direction: row;
+
+            .secret1-desc-value {
+              text-align: left;
+            }
           }
         }
       }
@@ -107,11 +111,15 @@ export default {
           box-shadow: inset 0 0 20rpx #8ab5f5;
         }
 
-        .secret1-desc-item {
-          flex-direction: row-reverse;
+        .secret1-desc {
+          text-align: right;
 
-          .secret1-desc-value {
-            text-align: right;
+          .secret1-desc-item {
+            flex-direction: row-reverse;
+
+            .secret1-desc-value {
+              text-align: right;
+            }
           }
         }
       }
