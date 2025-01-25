@@ -214,10 +214,6 @@ export default {
 
         .secret1-desc-item {
           flex-direction: row;
-
-          .secret1-desc-value {
-            text-align: justify;
-          }
         }
       }
 
@@ -232,10 +228,6 @@ export default {
 
         .secret1-desc-item {
           flex-direction: row-reverse;
-
-          .secret1-desc-value {
-            text-align: justify;
-          }
         }
       }
 

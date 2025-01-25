@@ -127,10 +127,6 @@ export default {
           border-color: #f39999;
           box-shadow: inset 0 0 20rpx #f39999;
         }
-
-        .details-desc {
-          text-align: justify;
-        }
       }
 
       &:nth-of-type(even) {
@@ -140,10 +136,6 @@ export default {
         .details-name {
           border-color: #8ab5f5;
           box-shadow: inset 0 0 20rpx #8ab5f5;
-        }
-
-        .details-desc {
-          text-align: justify;
         }
       }
 
