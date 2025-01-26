@@ -7,7 +7,7 @@
           <uni-icons type="closeempty" size="24" color="#f39999"></uni-icons>
         </view>
       </view>
-      <view class="awe-popup__content">
+      <view class="awe-popup__slot">
         <slot></slot>
       </view>
     </view>
