@@ -17,11 +17,11 @@
     <view class="bottom">农历：{{ lunarDate }}</view>
 
     <awe-popup ref="popupDetails" :title="detailsTitle">
-      <view class="details-content">
-        <scroll-view class="details-scroll-wrapper" scroll-y>
-          <view v-for="(item, index) in detailsList" :key="index" class="details-item">
-            <view class="details-name">{{ item.text }}</view>
-            <view class="details-desc">{{ item.consult }}</view>
+      <view class="awe-popup__content">
+        <scroll-view class="awe-popup__scroll-wrapper" scroll-y>
+          <view v-for="(item, index) in detailsList" :key="index" class="awe-popup__item">
+            <view class="awe-popup__name fit-content hanz">{{ item.text }}</view>
+            <view class="awe-popup__desc">{{ item.consult }}</view>
           </view>
         </scroll-view>
       </view>
@@ -85,6 +85,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/components/awe-popup/awe-popup-list.scss';
+
 .awesome-time-page {
   padding-bottom: 200rpx;
 
@@ -102,69 +104,6 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
-  }
-}
-
-.details-content {
-  padding: $to-border;
-
-  .details-scroll-wrapper {
-    height: 50vh;
-
-    .details-item {
-      border: solid 1rpx white;
-      border-radius: 50rpx;
-      min-height: 100rpx;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-
-      &:nth-of-type(odd) {
-        background-color: #f39999;
-        flex-direction: row;
-
-        .details-name {
-          border-color: #f39999;
-          box-shadow: inset 0 0 20rpx #f39999;
-        }
-      }
-
-      &:nth-of-type(even) {
-        background-color: #8ab5f5;
-        flex-direction: row-reverse;
-
-        .details-name {
-          border-color: #8ab5f5;
-          box-shadow: inset 0 0 20rpx #8ab5f5;
-        }
-      }
-
-      & + .details-item {
-        margin-top: $near-border;
-      }
-
-      .details-name {
-        flex-grow: 0;
-        flex-shrink: 0;
-        font-size: 0.75em;
-        padding: 0 $near-border;
-        width: fit-content;
-        height: 100rpx;
-        border-radius: 50rpx;
-        background-color: white;
-        border: $near-border solid transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .details-desc {
-        flex-grow: 1;
-        width: 1rpx;
-        color: white;
-        padding: $near-border $to-border;
-      }
-    }
   }
 }
 </style>

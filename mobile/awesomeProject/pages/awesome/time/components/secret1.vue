@@ -1,13 +1,13 @@
 <template>
-  <view class="secret1-content">
-    <scroll-view class="secret1-scroll-wrapper" scroll-y>
-      <view v-for="(item, index) in list" :key="index" class="secret1-item">
-        <view class="secret1-name">{{ item.name }}</view>
-        <view class="secret1-desc">
-          <view v-for="(desc, idx) in item.desc" :key="idx" class="secret1-desc-item">
-            <view class="secret1-desc-key" style="width: 2em">{{ desc.key }}</view>
-            <view class="secret1-desc-key">&nbsp;:&nbsp;</view>
-            <view class="secret1-desc-value">{{ desc.value }}</view>
+  <view class="awe-popup__content">
+    <scroll-view class="awe-popup__scroll-wrapper" scroll-y>
+      <view v-for="(item, index) in list" :key="index" class="awe-popup__item">
+        <view class="awe-popup__name">{{ item.name }}</view>
+        <view class="awe-popup__desc">
+          <view v-for="(desc, idx) in item.desc" :key="idx" class="awe-popup__desc-item">
+            <view class="awe-popup__desc-key" style="width: 2em">{{ desc.key }}</view>
+            <view class="awe-popup__desc-key">&nbsp;:&nbsp;</view>
+            <view class="awe-popup__desc-value">{{ desc.value }}</view>
           </view>
         </view>
       </view>
@@ -189,89 +189,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.secret1-content {
-  padding: $to-border;
-
-  .secret1-scroll-wrapper {
-    height: 50vh;
-
-    .secret1-item {
-      border: solid 1rpx white;
-      border-radius: 50rpx;
-      min-height: 100rpx;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-
-      &:nth-of-type(odd) {
-        background-color: #f39999;
-        flex-direction: row;
-
-        .secret1-name {
-          border-color: #f39999;
-          box-shadow: inset 0 0 20rpx #f39999;
-        }
-
-        .secret1-desc-item {
-          flex-direction: row;
-        }
-      }
-
-      &:nth-of-type(even) {
-        background-color: #8ab5f5;
-        flex-direction: row-reverse;
-
-        .secret1-name {
-          border-color: #8ab5f5;
-          box-shadow: inset 0 0 20rpx #8ab5f5;
-        }
-
-        .secret1-desc-item {
-          flex-direction: row-reverse;
-        }
-      }
-
-      & + .secret1-item {
-        margin-top: $near-border;
-      }
-
-      .secret1-name {
-        flex-grow: 0;
-        flex-shrink: 0;
-        width: 100rpx;
-        height: 100rpx;
-        border-radius: 50%;
-        background-color: white;
-        border: $near-border solid transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .secret1-desc {
-        flex-grow: 1;
-        width: 1rpx;
-        color: white;
-        padding: $near-border $to-border;
-
-        .secret1-desc-item {
-          display: flex;
-          justify-content: flex-start;
-          align-items: flex-start;
-
-          & + .secret1-desc-item {
-            margin-top: $near-border;
-          }
-
-          .secret1-desc-key {
-            flex-grow: 0;
-            flex-shrink: 0;
-            color: gold;
-            text-align: center;
-          }
-        }
-      }
-    }
-  }
-}
+@import '@/components/awe-popup/awe-popup-list.scss';
 </style>

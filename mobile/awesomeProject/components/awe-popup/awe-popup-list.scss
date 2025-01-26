@@ -1,0 +1,96 @@
+$color1: #f39999;
+$color2: #8ab5f5;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+.awe-popup__content {
+  padding: $to-border;
+
+  .awe-popup__scroll-wrapper {
+    height: 50vh;
+
+    .awe-popup__item {
+      border: solid 1rpx white;
+      border-radius: 50rpx;
+      min-height: 100rpx;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      &:nth-of-type(odd) {
+        background-color: $color1;
+        flex-direction: row;
+
+        .awe-popup__name {
+          box-shadow: inset 0 0 20rpx 1rpx $color1, 0 1rpx 10rpx 1rpx $shadow-color;
+        }
+
+        .awe-popup__desc-item {
+          flex-direction: row;
+        }
+      }
+
+      &:nth-of-type(even) {
+        background-color: $color2;
+        flex-direction: row-reverse;
+
+        .awe-popup__name {
+          box-shadow: inset 0 0 20rpx 1rpx $color2, 0 1rpx 10rpx 1rpx $shadow-color;
+        }
+
+        .awe-popup__desc-item {
+          flex-direction: row-reverse;
+        }
+      }
+
+      & + .awe-popup__item {
+        margin-top: $near-border;
+      }
+
+      .awe-popup__name {
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin: $near-border;
+        width: calc(100rpx - 2 * #{$near-border});
+        height: calc(100rpx - 2 * #{$near-border});
+        border-radius: calc(50rpx - #{$near-border});
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.hanz {
+          font-size: 0.75em;
+        }
+
+        &.fit-content {
+          width: fit-content;
+          padding: 0 $near-border;
+        }
+      }
+
+      .awe-popup__desc {
+        flex-grow: 1;
+        width: 1rpx;
+        color: white;
+        padding: $near-border $to-border;
+
+        .awe-popup__desc-item {
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          & + .awe-popup__desc-item {
+            margin-top: $near-border;
+          }
+
+          .awe-popup__desc-key {
+            flex-grow: 0;
+            flex-shrink: 0;
+            color: gold;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
