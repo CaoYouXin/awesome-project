@@ -249,14 +249,17 @@ function calcSum(dateStr, counter) {
 
       for (let i = 0; i < 4; ++i) {
         year += +dateStr[i];
+        counter[year] += 1;
       }
 
       for (let i = 4; i < 6; ++i) {
         month += +dateStr[i];
+        counter[month] += 1;
       }
 
       for (let i = 6; i < dateStr.length; ++i) {
         day += +dateStr[i];
+        counter[day] += 1;
       }
 
       dateStr = '' + year + month + day;
