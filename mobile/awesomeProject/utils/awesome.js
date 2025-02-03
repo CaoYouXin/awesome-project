@@ -186,7 +186,44 @@ export function calcAwesome(timestamp) {
   const geYin = calcGe(day.format('YYYYMMDD'), hour);
 
   return {
-    hour: hour,
+    hour,
+    solarDate,
+    geYang,
+    lunarDate,
+    geYin,
+  };
+}
+
+export function getDateArgs(birthday, isLunar, isFlag) {
+  let day = dayjs(birthday, 'YYYYMMDDHH');
+  if (isLunar) {
+    const lunarDate = day.format('YYYY-MM-DD');
+    const dayData = solarlunar.lunar2solar(day.get('year'), day.get('month') + 1, day.get('date'), isFlag);
+    day = day
+      .set('year', dayData.cYear)
+      .set('month', dayData.cMonth - 1)
+      .set('date', dayData.cDay);
+    const solarDate = day.format('YYYY-MM-DD');
+    return [solarDate, lunarDate];
+  } else {
+    const solarDate = day.format('YYYY-MM-DD');
+    const dayData = solarlunar.solar2lunar(day.get('year'), day.get('month') + 1, day.get('date'));
+    day = day
+      .set('year', dayData.lYear)
+      .set('month', dayData.lMonth - 1)
+      .set('date', dayData.lDay);
+    const lunarDate = day.format('YYYY-MM-DD');
+    return [solarDate, lunarDate];
+  }
+}
+
+export function calcAwesome2(hourNum, solarDate, lunarDate) {
+  const hour = calcHour(hourNum);
+  const geYang = calcGe(solarDate.replace(/-/g, ''), hour);
+  const geYin = calcGe(lunarDate.replace(/-/g, ''), hour);
+
+  return {
+    hour,
     solarDate,
     geYang,
     lunarDate,

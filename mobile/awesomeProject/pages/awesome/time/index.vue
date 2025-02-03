@@ -6,14 +6,20 @@
           <up-input v-model="form.name" placeholder="请输入名称"></up-input>
         </up-form-item>
         <up-form-item label="时间" prop="birthday" borderBottom>
-          <up-datetime-picker
-            v-model="form.birthday"
-            mode="datetime"
-            hasInput
-            :minDate="new Date(1900, 0, 1).getTime()"
-            :maxDate="new Date(2100, 0, 1).getTime()"
-          ></up-datetime-picker>
+          <up-input v-model="form.birthday" placeholder="请输入时间"></up-input>
         </up-form-item>
+        <up-row>
+          <up-col span="6">
+            <up-form-item label="农历" prop="isLunar" borderBottom>
+              <up-switch v-model="form.isLunar"></up-switch>
+            </up-form-item>
+          </up-col>
+          <up-col span="6">
+            <up-form-item label="闰月" prop="isFlag" borderBottom>
+              <up-switch v-model="form.isFlag" :disabled="isFlagDisabled"></up-switch>
+            </up-form-item>
+          </up-col>
+        </up-row>
         <up-button @click="submitForm()" text="提交"></up-button>
       </up-form>
     </view>
@@ -108,7 +114,8 @@
 <script>
 import Secret1 from './components/secret1.vue';
 import Secret2 from './components/secret2.vue';
-import { calcAwesome, calcNow } from '@/utils/awesome';
+import { getDateArgs, calcAwesome2, calcNow } from '@/utils/awesome';
+import dayjs from 'dayjs';
 
 export default {
   components: {
@@ -120,6 +127,8 @@ export default {
       form: {
         name: '',
         birthday: '',
+        isLunar: false,
+        isFlag: false,
       },
       rules: {
         name: {
@@ -140,6 +149,9 @@ export default {
   computed: {
     nowTableData() {
       return this.tableData.map(item => calcNow(item.geYang, item.geYin, item.solarDate));
+    },
+    isFlagDisabled() {
+      return !this.form.isLunar;
     },
   },
   onShow() {
@@ -179,20 +191,35 @@ export default {
     resetForm() {
       this.form = {
         name: '',
-        birthday: new Date().getTime(),
+        birthday: new dayjs().format('YYYYMMDDHH'),
       };
       this.$nextTick(() => {
         this.$refs.uForm.clearValidate();
       });
     },
+    validateBirthday() {
+      const errMsg = '日期格式不正确: ';
+
+      if (this.form.birthday.length !== '2025020317'.length) {
+        throw new Error(errMsg + this.form.birthday.length);
+      }
+
+      const hour = parseInt(this.form.birthday.slice(8, 10));
+      if (hour < 0 || hour > 23) {
+        throw new Error(errMsg + hour);
+      }
+
+      return [hour, ...getDateArgs(this.form.birthday, this.form.isLunar, this.form.isFlag)];
+    },
     submitForm() {
       this.$refs.uForm
         .validate()
         .then(_ => {
+          const args = this.validateBirthday();
           uni.showToast({ title: '校验通过' });
 
-          console.log(this.form.birthday);
-          const res = calcAwesome(this.form.birthday);
+          console.log(args);
+          const res = calcAwesome2(...args);
           this.tableData.unshift({
             ...this.form,
             ...res,

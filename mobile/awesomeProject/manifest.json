@@ -73,5 +73,7 @@
                 "enable" : true
             }
         }
-    }
+    },
+    "locale" : "zh-Hans",
+    "fallbackLocale" : "zh-Hans"
 }
