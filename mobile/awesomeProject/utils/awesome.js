@@ -194,7 +194,7 @@ export function calcAwesome(timestamp) {
   };
 }
 
-export function getDateArgs(birthday, isLunar, isFlag) {
+export function calcDateArgs(birthday, isLunar, isFlag) {
   let day = dayjs(birthday, 'YYYYMMDDHH');
   if (isLunar) {
     const lunarDate = day.format('YYYY-MM-DD');

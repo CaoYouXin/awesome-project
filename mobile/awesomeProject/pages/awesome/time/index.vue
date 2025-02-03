@@ -114,7 +114,7 @@
 <script>
 import Secret1 from './components/secret1.vue';
 import Secret2 from './components/secret2.vue';
-import { getDateArgs, calcAwesome2, calcNow } from '@/utils/awesome';
+import { calcDateArgs, calcAwesome2, calcNow } from '@/utils/awesome';
 import dayjs from 'dayjs';
 
 export default {
@@ -134,7 +134,7 @@ export default {
         name: {
           type: 'string',
           required: true,
-          message: '请填写姓名',
+          message: '请填写名称',
           trigger: ['blur', 'change'],
         },
       },
@@ -209,7 +209,7 @@ export default {
         throw new Error(errMsg + hour);
       }
 
-      return [hour, ...getDateArgs(this.form.birthday, this.form.isLunar, this.form.isFlag)];
+      return [hour, ...calcDateArgs(this.form.birthday, this.form.isLunar, this.form.isFlag)];
     },
     submitForm() {
       this.$refs.uForm
