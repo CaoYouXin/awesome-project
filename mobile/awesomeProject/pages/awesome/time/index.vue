@@ -209,7 +209,12 @@ export default {
         throw new Error(errMsg + hour);
       }
 
-      return [hour, ...calcDateArgs(this.form.birthday, this.form.isLunar, this.form.isFlag)];
+      const dateArgs = calcDateArgs(this.form.birthday, this.form.isLunar, this.form.isFlag);
+      if (dateArgs.some(d => d === 'Invalid Date')) {
+        throw new Error(errMsg + dateArgs.join(','));
+      }
+
+      return [hour, ...dateArgs];
     },
     submitForm() {
       this.$refs.uForm

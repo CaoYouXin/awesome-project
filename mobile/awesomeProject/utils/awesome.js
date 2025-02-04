@@ -196,6 +196,8 @@ export function calcAwesome(timestamp) {
 
 export function calcDateArgs(birthday, isLunar, isFlag) {
   let day = dayjs(birthday, 'YYYYMMDDHH');
+  console.log(day);
+
   if (isLunar) {
     const lunarDate = day.format('YYYY-MM-DD');
     const dayData = solarlunar.lunar2solar(day.get('year'), day.get('month') + 1, day.get('date'), isFlag);
