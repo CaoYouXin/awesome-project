@@ -15,12 +15,31 @@ export function calcRen(timestamp) {
   const lunarDate = day.format('YYYY-MM-DD');
 
   const ren = calcRenMDH(day.get('month'), day.get('date'), hour.index + 1);
+  const renC = calcRenMDHC(day.get('month'), day.get('date'), hour.index + 1);
 
   return {
     hour,
     solarDate,
     lunarDate,
     ren,
+    renC,
+  };
+}
+
+function calcRenMDHC(monthIdx, dateCount, hourCount) {
+  const ren = ['大安', '留连', '速喜', '赤口', '小吉', '空亡', '病符', '桃花', '天德'];
+
+  let last = monthIdx % 9;
+  let text = ren[last];
+
+  last = (dateCount + last - 1) % 9;
+  text += '+' + ren[last];
+
+  last = (hourCount + last - 1) % 9;
+  text += '+' + ren[last];
+
+  return {
+    text,
   };
 }
 

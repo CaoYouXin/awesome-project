@@ -1,12 +1,12 @@
 <template>
   <view class="awesome-time-page">
-    <view class="form-container" @click="showCanlendar = true">
+    <view class="form-container">
       <uni-datetime-picker type="date" :clear-icon="false" v-model="day" @change="change" />
     </view>
 
     <up-list>
       <up-list-item v-for="(item, index) in indexList" :key="index">
-        <up-cell isLink :value="item.ren.text" @click="showDetail(item)">
+        <up-cell isLink :value="`${item.renC.text}\n${item.ren.text}`" @click="showDetail(item)">
           <template #title>
             <up-tag>{{ item.hour.hour }} : {{ item.hour.clock }}</up-tag>
           </template>
